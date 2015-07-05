@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+	<div class="container-fluid">
+	
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-0">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">YSH</a>
+		</div>
+		
+		<div class="navbar-collapse collapse" id="navbar-collapse-0">
+			<ul class="nav navbar-nav">
+				<li>	<a href="#/subscriptions"> 	Subs</a> </li>
+				<li>	<a href="#/history">		History</a> </li>
+				<li>	<a href="#/subSelection"> 	Select</a> </li>
+				<li>	<a href="#/options">		Options</a> </li>
+				<li>	<a class="btn" ng-click="update()"><i class="glyphicon glyphicon-refresh"> </i> </a> </li>
+				<li style=" {{!updating>0?'display: none':'display: inherit;'}}">	<a> UPDATING </a>	</li>
+			</ul>
+		</div>
+		
+	</div>
+</nav>

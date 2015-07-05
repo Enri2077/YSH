@@ -1,0 +1,44 @@
+{
+	"manifest_version": 2,
+
+	"name": "Simple Homepage for Youtube™",
+	"description": "An alternative homepage for Youtube™",
+	"version": "0.1.2",
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAirneE0leNEKss0df8vAgC7tGY2PBlzvSzdIQ7QNSt7Eh6Cb6ux75gs4kk/JPhk4lSkbw4EbEGWCAuWqBnYmfuwlOrJmDstu+KqIrLpDT6j/MUBTqbzfI+2fkeJ3iN5+wh8WelOjc4xt2JJN2iwyEdLSl0co/UaZhh3sado2ernFjdFQd+gA/685Fg6LFTpx9nQrfY5yvQMkg+P6nF2cGHpuA/qT1nQRAhmc9fGd5t0D4hBkDrqCxh12ijB6NGMTdBSOZsgUPg/MYh7xAGzOFsUzDDl+kZhAFZZS+APF3koYa+klY0/p8zaf28m7VPqaepbl7FLVNae2+mhwP2nlNTQIDAQAB",
+	
+	"background": {
+    	"scripts": ["js/background.js"]
+	},
+	
+	"browser_action": {
+		"default_title": "open Youtube Simple Homepage in a new tab",
+		"default_icon": {
+			"19": "assets/icon_19x19.png",
+			"38": "assets/icon_128x128.png"
+		}
+	},
+	
+	"options_page": "options/options.html",
+	
+	"oauth2": {
+		"client_id": "921945633910-ek11tf4ng2g01vmjoifdfvvn6cqjulpa.apps.googleusercontent.com",
+		"scopes": [
+			"https://www.googleapis.com/auth/youtube"
+		]
+	},
+	
+	"icons": {
+		"16": "assets/icon_16x16.png",
+		"128": "assets/icon_128x128.png"
+	},
+
+	"permissions": [
+		"identity",
+		"storage",
+		"unlimitedStorage",
+		"tabs",
+    	"https://ssl.gstatic.com/",
+    	"https://www.googleapis.com/",
+    	"https://accounts.google.com/"
+	]
+}

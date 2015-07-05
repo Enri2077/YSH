@@ -1,0 +1,139 @@
+"use strict";
+
+function modelSubscription(){
+	
+	// constructor
+	function Subscription(title, channelId, thumbnails, etag, pinPriority, history, uploads, lastUploadDate, nextPageToken){
+		this.title			= title;
+		this.channelId 		= channelId;
+		this.thumbnails 	= thumbnails;
+		this.etag 			= etag;
+		this.pinPriority 	= pinPriority;
+		this.history 		= history;
+		this.uploads 		= uploads;
+		this.lastUploadDate	= lastUploadDate;
+		this.nextPageToken	= nextPageToken;
+	}
+	
+	// static
+	Subscription.apiResponseTransformer = function(youtubeApiResponse){
+		return new Subscription(
+			youtubeApiResponse.snippet.title,
+			youtubeApiResponse.snippet.resourceId.channelId,
+			youtubeApiResponse.snippet.thumbnails,
+			youtubeApiResponse.etag
+		);
+	};
+	
+	// static
+	Subscription.fromStorageObject = function(storageObject, pinPriority, history){
+		return new Subscription(
+			storageObject.title,
+			storageObject.channelId,
+			storageObject.thumbnails,
+			storageObject.etag,
+			pinPriority,
+			history,
+			storageObject.uploads,
+			storageObject.lastUploadDate,
+			storageObject.nextPageToken
+		);
+	};
+	
+	// public
+	Subscription.prototype.toStorageObject = function(){
+		if(this.pinPriority > 0) return {
+			title: 			this.title,
+			channelId:		this.channelId,
+			thumbnails:		this.thumbnails,
+			etag:			this.etag,
+			uploads:		this.uploads,
+			lastUploadDate:	this.lastUploadDate
+		}
+		else return {
+			title: 			this.title,
+			channelId:		this.channelId,
+			thumbnails:		this.thumbnails
+		}
+	};
+	
+	Subscription.prototype.updateInfo = function(youtubeApiResponse){
+		this.title			= youtubeApiResponse.snippet.title;
+		this.thumbnails 	= youtubeApiResponse.snippet.thumbnails;
+	}
+	
+	
+	// public
+	Subscription.prototype.getPinPriority = function(){
+		return (this.pinPriority != null ? this.pinPriority : 0 );
+	};
+	
+	// public
+	Subscription.prototype.toggleFavorited = function(){
+		if(this.getPinPriority()==1) this.pinPriority = 0;		// if it was favorited already, then it's not now
+		else this.pinPriority = 1;								// if it was not favorited already, then it's now
+	};
+	
+	// public
+	Subscription.prototype.toggleLoved = function(){
+		//TODO
+	};
+	
+	
+	
+	// public
+	Subscription.prototype.hasInHistory = function(upload){
+		if(!this.history) return false;
+		
+		for (var i = this.history.length-1; i >= 0 ; i--) {
+			if (this.history[i].videoId === upload.contentDetails.upload.videoId) {
+				return true;
+			}
+		}
+		return false;
+	};
+	
+	// public
+	Subscription.prototype.addToHistory = function(historyEntry){
+		if(!this.history) this.history = new Array();
+		this.history.push(historyEntry);
+	};
+	
+	// public
+	Subscription.prototype.setHistory = function(historyEntries){
+		this.history = historyEntries;
+	};
+	
+	
+	
+	// public
+	Subscription.prototype.hasUploads = function(){
+		return this.uploads && this.uploads.length;
+	};
+	
+	// public
+	Subscription.prototype.hasInUploads = function(upload){
+		if(!this.uploads) return false;
+		
+		for (var i = this.uploads.length-1; i >= 0 ; i--) {
+			if (this.uploads[i].contentDetails.upload.videoId === upload.contentDetails.upload.videoId) {
+				return true;
+			}
+		}
+		return false;
+	};
+	
+	// public
+	Subscription.prototype.pushUpload = function(upload){
+		if(!this.uploads) this.uploads = new Array();
+		this.uploads.push(upload);
+	};
+	
+	// public
+	Subscription.prototype.updateLastUploadDate = function(){
+		if(this.hasUploads()) this.lastUploadDate = this.uploads[0].snippet.publishedAt;
+		else this.lastUploadDate = null;
+	};
+	
+	return Subscription;
+}

@@ -1,0 +1,49 @@
+
+var app = angular.module('app', ['ngtimeago']);
+
+app.service('SubscriptionService', serviceSubscription);
+
+app.factory('Subscription', modelSubscription);
+
+app.factory('cApis', function() {
+	var cApis = new ChromeApis();
+	return cApis;
+});
+
+app.factory('sl', function(){
+	function sl(){};
+	
+	sl.data = new Object();
+	
+	return sl;
+});
+
+app.directive('yshVideoBox', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'ysh-video-box.html'
+	};
+});
+
+
+/*
+app.service('MessageService', function(){
+	this.n = 1;
+	console.log("MessageService");
+	this.notificationsCount = function(){
+		console.log("MessageService.notificationsCount", this.n);
+		return this.n;
+	};
+	
+	this.inc = function(){
+		this.n = this.n + 1;
+		console.log("MessageService.inc", this.n);
+	};
+	
+	this.reset = function(){
+		console.log("MessageService.resetUnreadNotifications");
+		this.n = 0;
+	};
+});
+*/
+

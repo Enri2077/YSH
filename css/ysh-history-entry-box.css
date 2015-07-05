@@ -1,0 +1,48 @@
+.ysh-history-entry-box{
+	height:				150px;
+	width:				800px;
+	display:			block;
+	
+	margin: 			4px;
+	background-color:	#404040;
+}
+
+.ysh-heb-history-date{
+	width:			120px;
+	float:			left;
+	margin:			10px;
+	vertical-align:	top;
+	display:		inline;
+}
+
+.ysh-heb-buttons{
+	margin:			10px;
+	float:			right;
+	vertical-align:	top;
+	display:		inline-block;
+}
+
+.ysh-heb-description{
+	vertical-align:	top;
+	display:		inline-block;
+}
+
+.ysh-heb-title{
+	margin:	10px;
+	max-width: 380px;
+/*	height: 26em;
+	overflow: hidden;*/
+}
+
+.ysh-heb-upload-date{
+	margin:	10px;
+}
+
+.ysh-heb-img{
+	margin:			10px;
+	border-radius:	4px;
+}
+
+.ysh-heb-img-grayed{
+	opacity: 	0.25;
+}

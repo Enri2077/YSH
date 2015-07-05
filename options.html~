@@ -1,0 +1,45 @@
+<html data-ng-app="optionsModule" ng-csp="">
+<head>
+	<meta charset="utf-8" />
+	<title>Options - Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="css/app.css">
+	<base target="_blank">
+</head>
+<body ng-controller="OptionsController as optCtrl" class="ysh-options-body">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<ul class="nav navbar-nav">
+			
+			<li>
+				<a href="main.html"> Subscriptions</a>
+			</li>
+			
+			<li>
+				<a href="https://www.youtube.com/feed/history"> History</a>
+			</li>
+			
+		</ul>
+	</nav>
+	
+	{{optCtrl.status}} <br>
+	
+	{{optCtrl.bytesInUse/1000.0}} kB in use  <br>  <br>
+	
+	<button class="btn btn-warning" ng-click="optCtrl.wipeSubscriptionsState()">wipe subscriptions state</button> 
+	
+	<button class="btn btn-danger" ng-click="optCtrl.wipeStorage()">wipe storage</button> 
+	
+	<!--form name="optionsForm">
+		Number of uploads shown for each subscription (in each row):
+		<input  name="maxUploadShown" ng-model="optCtrl.options.maxUploadShown" ng-change="optCtrl.saveOptions(optionsForm.$valid)"
+				type="number" min="3" max="15" required>
+		
+		<span class="error" ng-show="optionsForm.maxUploadShown.$error.required">Required!</span><br>
+		
+	</form-->
+	
+	<script src="js/capis.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/options.js"></script>
+</body>
+</html>

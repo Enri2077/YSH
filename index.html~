@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" ng-app="app" ng-csp="">
+<head>
+	<meta charset="utf-8">
+	<title> title </title>
+	
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/angular.js"></script>
+	
+	<script src="js/jquery.timeago.js"></script>
+	<script src="js/angular-route.js"></script>
+	<script src="js/ngtimeago.js"></script>
+	<script src="js/ng-infinite-scroll.min.js"></script>
+	<script src="css/bootstrap/js/bootstrap.js"></script>
+	
+	<script src="shared/capis.js"></script>
+	<script src="shared/subscriptionService.js"></script>
+	<script src="shared/historyService.js"></script>
+	
+	<script src="shared/subscriptionModel.js"></script>
+	<script src="shared/videoModel.js"></script>
+	
+	<script src="shared/app.js"></script>
+	
+	<script src="subscriptions/subscriptionViewController.js"></script>
+	<script src="subscriptions/subscriptionsController.js"></script>
+	<script src="subscriptions/subscriptionsControllerState.js"></script>
+	<script src="subSelection/subscriptionsSelectionController.js"></script>
+	<script src="options/optionsController.js"></script>
+	<script src="history/historyController.js"></script>
+	
+	
+	<link rel="stylesheet" media="all" href="css/angular-csp.css">
+	<link rel="stylesheet" media="all" href="css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="css/app.css">
+	<link rel="stylesheet" media="all" href="css/subscriptions.css">
+	<link rel="stylesheet" media="all" href="css/ysh-video-box.css">
+	<link rel="stylesheet" media="all" href="css/sub-selection.css">
+	<link rel="stylesheet" media="all" href="css/options.css">
+	<link rel="stylesheet" media="all" href="css/history.css">
+	<link rel="stylesheet" media="all" href="css/ysh-history-entry-box.css">
+	
+	
+</head>
+<body>
+
+	<div>
+		<div ng-view></div>
+	</div>
+
+</body>
+</html>

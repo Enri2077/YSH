@@ -1,0 +1,20 @@
+.ysh-video-box.ysh-external-box{
+	width: 165px;
+	margin-left: 5px;
+	display: inline-block;
+}
+
+.ysh-video-box.ysh-video-title{
+	height: 6em;
+	overflow: hidden;
+}
+
+.ysh-video-box.ysh-date{
+	text-align: center;
+	color: darkgray;
+}
+
+img.ysh-video-box{
+	border-radius: 4px;
+}
+

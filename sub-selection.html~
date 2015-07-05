@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html data-ng-app="app" ng-csp="">
+<head>
+	<meta charset="utf-8" />
+	<title>Select your subs - Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="css/sub-selection.css">
+	<base target="_blank">
+</head>
+<body ng-controller="SubscriptionSelectionController as selCtrl">
+	
+	<div class="ysh-subscription-selection-container" ng-repeat="subscription in selCtrl.subscriptions track by subscription.channelId" >
+		
+		<div class="ysh-subscription-btns-container" >
+			
+			<a class="btn ysh-positioned-btn ysh-favorite-btn" ng-class="{'ysh-favorite-btn-favorited': selCtrl.isSubscriptionFavorited(subscription)}" ng-click="selCtrl.setFavoriteSubscription(subscription)">
+				<i class="glyphicon {{selCtrl.isSubscriptionFavorited(subscription)?'glyphicon-star':'glyphicon-star-empty'}}"></i>
+			</a>
+		
+			<a class="btn ysh-positioned-btn ysh-love-btn" ng-class="{'ysh-love-btn-loved': selCtrl.isSubscriptionLoved(subscription)}" ng-click="selCtrl.setLoveSubscription(subscription)">
+				<i class="glyphicon {{selCtrl.isSubscriptionLoved(subscription)?'glyphicon-heart':'glyphicon-heart-empty'}}"></i>
+			</a>
+			
+		</div>
+		
+		<img class="ysh-subscription-thumbnail" ng-src="{{subscription.thumbnails.high.url}}"/>
+		
+		<div class="ysh-subscription-title">
+			<a class="ysh-unnoticeable-link" href="https://www.youtube.com/channel/{{subscription.channelId}}" >
+				{{subscription.title}}
+			</a>
+		</div>
+		
+	</div>
+	
+	<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="js/jquery.timeago.js" type="text/javascript"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/ngtimeago.js" type="text/javascript"></script>
+	<script src="js/capis.js"></script>
+	<script src="js/subscriptionModel.js"></script>
+	<script src="js/subscriptionService.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/subscriptionsSelectionController.js"></script>
+</body>
+</html>

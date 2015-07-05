@@ -1,0 +1,23 @@
+<div class="ysh-video-box ysh-external-box">
+		<div>
+			<a	class="btn" ng-click="subCtrl.addToHistory(upload, subscription)"
+				href="https://www.youtube.com/v/{{upload.contentDetails.upload.videoId}}?autoplay=true"
+				title="open video in full-browser">
+				<i class="glyphicon glyphicon-fullscreen"></i>
+			</a>
+			<a class="btn" ng-click="subCtrl.addToHistory(upload, subscription)" title="hide video">
+				<i class="glyphicon glyphicon-remove"></i>
+			</a>
+		</div>
+		
+		<a 	class="ysh-unnoticeable-link" ng-click="subCtrl.addToHistory(upload, subscription)"
+			href="https://www.youtube.com/watch?v={{upload.contentDetails.upload.videoId}}"
+			title="{{upload.snippet.title}}">
+			<img class="ysh-video-box" ng-src="{{upload.snippet.thumbnails.medium.url}}" width="160" height="90" />
+			<div class="ysh-video-box ysh-video-title">{{:: upload.snippet.title}}</div>
+		</a>
+		
+		<div class="ysh-date-text ysh-video-box ysh-date">
+			{{upload.snippet.publishedAt | timeago}}
+		</div>
+</div>

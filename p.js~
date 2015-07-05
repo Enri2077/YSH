@@ -1,0 +1,5 @@
+d = new Date("2014-09-07 16:15:03");
+
+console.log( "d: "+d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
+  
+

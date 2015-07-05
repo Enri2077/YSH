@@ -1,0 +1,105 @@
+body{
+	padding-top:		53px;
+	padding-bottom:		150px;
+	background-color:	#363636;
+}
+
+.ysh-light-text{
+	color:	lightgray;
+}
+
+.ysh-bright-text:hover{
+	color:	lightgray;
+}
+
+.btn:hover{
+	background-color:	#222;
+	color:				#428bca;
+}
+
+.ysh-subscription-container{
+	background-color: #404040;
+	padding: 5px;
+	margin: 5px;
+	border-left-style: solid;
+	border-left-width: 3px;
+/*	background: linear-gradient(#404040,#383838); */
+}
+
+.ysh-subscription-container-favorited{
+	border-left-color: #a0a000;
+}
+.ysh-subscription-container-loved{
+	border-left-color: #c00000;
+}
+
+.ysh-subscription-title-box{
+	height:	88px;
+}
+.ysh-subscription-title-box-content{
+	display:		inline-block;
+	vertical-align:	middle;
+}
+.ysh-subscription-title{
+	font-size:	xx-large;
+	color:		lightgray;
+}
+.ysh-subscription-options{
+	float:	right;
+}
+
+.ysh-love-btn{
+	color:	gray;
+}
+.ysh-love-btn:hover{
+	color:	red;
+}
+.ysh-love-btn-loved{
+	color:	red;
+}
+
+.ysh-favorite-btn{
+	color:	gray;
+}
+.ysh-favorite-btn:hover{
+	color:	yellow;
+}
+.ysh-favorite-btn-favorited{
+	color:	yellow;
+}
+
+.ysh-activated-btn{
+	background-color:	#222;
+	color: 				#428bca;
+}
+
+.ysh-date-text{
+	color:	lightgray;
+}
+
+.ysh-unnoticeable-link{
+	text-decoration: none;
+}
+.ysh-unnoticeable-link:visited{
+	text-decoration: none;
+}
+.ysh-unnoticeable-link:hover{
+	text-decoration: none;
+}
+.ysh-unnoticeable-link:active{
+	text-decoration: none;
+}
+
+.ysh-alert{
+	
+	width:		50%;
+	margin:		50px;
+}
+
+.ysh-uploads-container{
+	overflow:	hidden;
+	height:		228px;
+}
+
+.ysh-uploads-container-expanded{
+}

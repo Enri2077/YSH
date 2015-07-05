@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="historyModule" ng-csp="">
+<head>
+	<meta charset="utf-8" />
+	<title>History - Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="css/app.css">
+	<base target="_blank">
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container-fluid">
+		
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-0">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="main.html">YSH</a>
+			</div>
+			
+			<div class="navbar-collapse collapse" id="navbar-collapse-0">
+				<ul class="nav navbar-nav">
+					<li>	<a href="https://www.youtube.com/feed/history"> History</a> </li>
+					<li>	<a href="options.html"> Options</a> </li>
+					<li>	<a href="sub-selection.html"> Select</a> </li>
+					<li>	<a class="btn" ng-click="subCtrl.updateAllSubscriptions()"><i class="glyphicon glyphicon-refresh"> </i> </a> </li>
+				</ul>
+			</div>
+			
+		</div>
+	</nav>
+	
+	<section ng-controller="HistoryController as hisCtrl">
+		<a class="btn" ng-click="hisCtrl.n = hisCtrl.n + 1"> +</a>
+		<a class="btn" ng-click="hisCtrl.n = hisCtrl.n - 1"> -</a>
+		<br>
+		<a class="btn" ng-click="hisCtrl.updateHistory()"> update() </a>
+		<br>
+		
+		
+		<div ng-repeat="(i, entry) in hisCtrl.timeline" class="ysh-light-text">
+			
+			{{entry.channelId}} - {{entry.videoId}}
+			
+		</div>
+		
+		
+		
+		<div ng-repeat="(subscription, entries) in hisCtrl.history" class="ysh-light-text">
+			<h2>{{subscription}}</h2>
+			<ul>
+				<li ng-repeat="entry in entries">
+					{{entry.videoId}}
+				</li>
+			</ul>
+		</div>
+		
+		<!--
+		<div ng-repeat="(subscription, entries) in hisCtrl.history" >
+			<h2>{{subscription}}</h2>
+			<ul>
+				<li ng-repeat="entry in entries">
+					{{entry.date.getTime()}}: {{entry.videoId}}
+				</li>
+			</ul>
+		</div>
+		-->
+		
+		
+		<!--<div infinite-scroll="hisCtrl.myPagingFunction()" infinite-scroll-distance="3">
+			<div ng-repeat="historyEntry in hisCtrl.historyEntries" style="height: 100px;">
+				{{historyEntry.title}}
+			</div>
+		</div>
+		-->
+		
+		<!--
+		<div ng-repeat="channel in subCtrl.channels" >
+			<div style="{{channel.history.length?'':'display: none'}}">
+		
+				{{channel.snippet.title}} <br>
+				
+				<ul>
+					<li ng-repeat="entry in channel.history">
+						<a href="https://www.youtube.com/watch?v={{entry.videoId}}">{{entry.videoId}}</a>
+					</li>
+				</ul>
+			
+				<br>
+			</div>
+		</div>
+		-->
+	</section>
+
+	<script src="js/capis.js"></script>
+	<script src='js/jquery-2.1.1.min.js'></script>
+	<script src="js/angular.min.js"></script>
+	<script src='js/ng-infinite-scroll.min.js'></script>
+	<script src="js/history.js"></script>
+</body>
+</html>

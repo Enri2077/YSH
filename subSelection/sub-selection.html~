@@ -1,0 +1,37 @@
+<!--title>Select your subs - Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="../css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="../css/app.css">
+	<link rel="stylesheet" media="all" href="../css/sub-selection.css"-->
+
+<div>
+	
+	<ysh-navbar></ysh-navbar>
+	
+	<div class="ysh-subscription-selection-container" ng-repeat="subscription in selCtrl.subscriptions | orderBy:'-(getPinPriority()+title)' track by subscription.channelId" >
+		
+		<div class="ysh-subscription-btns-container" >
+			
+			<a class="btn ysh-positioned-btn ysh-favorite-btn" ng-class="{'ysh-favorite-btn-favorited': selCtrl.isSubscriptionFavorited(subscription)}" ng-click="selCtrl.setFavoriteSubscription(subscription)">
+				<i class="glyphicon {{selCtrl.isSubscriptionFavorited(subscription)?'glyphicon-star':'glyphicon-star-empty'}}"></i>
+			</a>
+		
+			<a class="btn ysh-positioned-btn ysh-love-btn" ng-class="{'ysh-love-btn-loved': selCtrl.isSubscriptionLoved(subscription)}" ng-click="selCtrl.setLoveSubscription(subscription)">
+				<i class="glyphicon {{selCtrl.isSubscriptionLoved(subscription)?'glyphicon-heart':'glyphicon-heart-empty'}}"></i>
+			</a>
+			
+		</div>
+		
+		<img class="ysh-subscription-thumbnail" ng-src="{{subscription.thumbnails.high.url}}"/>
+		
+		<div class="ysh-subscription-selection-container-subscription-title">
+			<a class="ysh-unnoticeable-link" ng-class="{
+								'ysh-subscription-title-favorited':	selCtrl.isSubscriptionFavorited(subscription),
+								'ysh-subscription-title-loved':		selCtrl.isSubscriptionLoved(subscription)}" href="https://www.youtube.com/channel/{{subscription.channelId}}" target="_blank">
+				{{subscription.title}}
+			</a>
+		</div>
+		
+	</div>
+	
+</div>
+

@@ -1,0 +1,86 @@
+
+.ysh-subscription-selection-container{
+	display:			inline-block;
+	width:				260px;
+}
+
+.ysh-subscription-thumbnail{
+	margin: 			10px 10px 0px 10px;
+	width:				240px;
+	height:				240px;
+}
+
+
+.ysh-subscription-btns-container{
+	margin: 			10px 10px 0px 10px;
+	width: 				240px;
+	position: 			absolute;
+	background-color:	rgba(10,10,10,0.75);
+}
+
+.ysh-positioned-btn{
+	position:			relative;
+	width:				49%;
+	font-size:			2em;
+}
+
+.ysh-love-btn{
+	color:				gray;
+}
+.ysh-love-btn:hover{
+	background-color:	black;
+	color:				red;
+}
+.ysh-love-btn-loved{
+	color:				red;
+}
+
+.ysh-favorite-btn{
+	color:				gray;
+}
+.ysh-favorite-btn:hover{
+	background-color:	black;
+	color:				yellow;
+}
+.ysh-favorite-btn-favorited{
+	color:				yellow;
+}
+
+
+.ysh-subscription-selection-container-subscription-title{
+	margin-bottom: 		10px;
+	text-align: 		center;
+	font-size:			2em;
+	height:				3em;
+	overflow:			hidden;
+}
+.ysh-subscription-selection-container-subscription-title-text{
+	color:				darkgray;
+}
+/*
+.ysh-subscription-title-favorited{
+	color:	#c0c000;
+}
+.ysh-subscription-title-loved{
+	color:	#d00000;
+}
+*/
+.ysh-unnoticeable-link{
+	text-decoration: 	none;
+}
+.ysh-unnoticeable-link:visited{
+	text-decoration: 	none;
+}
+.ysh-unnoticeable-link:hover{
+	text-decoration: 	none;
+}
+.ysh-unnoticeable-link:active{
+	text-decoration: 	none;
+}
+
+.ysh-alert{
+	display:			none;
+	width:				50%;
+	margin:				50px;
+}
+

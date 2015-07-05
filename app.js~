@@ -1,0 +1,60 @@
+(function(){
+	var app = angular.module('default', []);
+	
+	app.controller('SubscriptionController', ['$http', function($http){
+		var t = this;
+		t.channels = new Array();
+		
+		requestSubscriptions = function(pageToken){
+			part 		= "snippet,contentDetails";
+			maxResults	= "50";
+			channelId 	= "UCzr5OeUM7ML6OsMHWRC4U1g";
+			key 		= "AIzaSyCGQi6WwvIhr62iyFcdg_b0PKOSUbb4mKw";
+			requestUrl 	= "https://www.googleapis.com/youtube/v3/subscriptions"
+								+"?part="+part
+								+"&maxResults="+maxResults
+								+"&channelId="+channelId
+								+"&key="+key
+								+"&pageToken="+pageToken;
+			
+			$http.get(requestUrl).success(function(response){
+				response.items.forEach(function(item){
+					requestFeeds(item, "");
+				});
+				
+				t.channels = t.channels.concat(response.items);
+				
+				if(response.nextPageToken) requestSubscriptions(response.nextPageToken);
+			});
+		};
+		
+		requestFeeds = function(subscription, pageToken){
+			part 			= "snippet,contentDetails";
+			maxResults		= "50";
+			publishedAfter	= "2014-08-29T00:00:00.0Z";
+			channelId 		= subscription.snippet.resourceId.channelid;
+			key 			= "AIzaSyCGQi6WwvIhr62iyFcdg_b0PKOSUbb4mKw";
+			requestUrl	 	= "https://www.googleapis.com/youtube/v3/activities"
+								+"?part="+part
+								+"&maxResults="+maxResults
+								+"&publishedAfter="+publishedAfter
+								+"&channelId="+channelId
+								+"&key="+key
+								+"&pageToken="+pageToken;
+			
+			$http.get(requestUrl).success(function(response){
+				if(!subscription.feeds) subscription.feeds = new Array();
+				subscription.feeds = subscription.feeds.concat(response.items);
+				
+				if(response.nextPageToken) requestFeeds(subscription, response.nextPageToken);
+			});
+		};
+		
+		
+		requestSubscriptions("");
+		
+
+		
+	}]);
+	
+})();

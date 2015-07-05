@@ -1,0 +1,20 @@
+s.periodOfUpload * 1/s.meanTimeToWatch
+(first the uploads I watch first && first the uncommon uploads)
+i.e.:
+	(Tu, watch immidiatly) > (Tu, watch later)
+	(once a month, watch immidiatly) > (once a week, watch immidiatly) > (once a day, watch immidiatly)
+	
+
+-s.meanTimeToWatch
+
+Relative ordering between subscriptions:
+Being s(u) the subscription that has published the upload u.
+Partitioning the time in intervals i, such that no new uploads have been published in i;
+Letting be the uploads u_i, those that were available in the interval i.
+Letting be the uploads v_i, those that were viewed (clicked on) in the interval i.
+There is a partially ordered relationship σ between the subscriptions s' in s(v_i), given by the order in which the first of s' uploads are viewed in the interval i.
+i.e.: s1,s2,s3,s1 → s1>s2>s3
+
+adaptive neural network
+	· positive on uploads seen
+	· positive on uploads liked

@@ -1,0 +1,23 @@
+<div class="ysh-video-box ysh-external-box">
+		<div>
+			<a	class="btn" ng-click="subCtrl.addToHistory(upload, subscription, false)"
+				href="{{upload.getFullBrowserUrl()}}" target="_blank"
+				title="open video in full-browser">
+				<i class="glyphicon glyphicon-fullscreen"></i>
+			</a>
+			<a class="btn" ng-click="subCtrl.addToHistory(upload, subscription, true)" title="hide video">
+				<i class="glyphicon glyphicon-remove"></i>
+			</a>
+		</div>
+		
+		<a 	class="ysh-unnoticeable-link" ng-click="subCtrl.addToHistory(upload, subscription, false)"
+			href="{{upload.getUrl()}}" target="_blank"
+			title="{{upload.title}}">
+			<img class="ysh-video-box" ng-src="{{upload.thumbnails.medium.url}}" width="160" height="90" />
+			<div class="ysh-video-box ysh-video-title">{{upload.title}}</div>
+		</a>
+		
+		<div class="ysh-date-text ysh-video-box ysh-date" title="{{upload.getReadablePublishedAt()}}">
+			{{upload.publishedAt | timeago}}
+		</div>
+</div>

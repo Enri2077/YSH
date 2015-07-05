@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd /home/enrico/workspace-chrome/YSH
+
+FILE_NAME="backup_v"$( cat manifest.json | grep \"version\"| tr -cd '[[:digit:]||[.]]')"_"$( date +%Y-%m-%d-%R )".zip"
+
+zip ./packed/$FILE_NAME $( find . \( -not -wholename "./packed*" -not -name "backup.sh" \) )
+
+echo "created file "$FILE_NAME
+
+echo "ls: "$(ls ./packed/$FILE_NAME)
+

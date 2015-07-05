@@ -1,0 +1,249 @@
+
+var app = angular.module('subSelectionModule', []);
+
+app.factory('cApis', function() {
+	var cApis = new ChromeApis();
+	return cApis;
+});
+
+app.controller('SubscriptionSelectionController', ['$http', '$scope', 'cApis', function($http, $scope, cApis){
+	var t = this;
+	this.signedIn = false;
+	this.subscriptions = new Array();
+	subscriptionsLookup = new Object();
+	
+	
+	this.signIn = function(silent){
+		cApis.auth(!silent, function() { // asynchronous callback on token recevied
+			t.signedIn = true;
+		
+			// Include common headers (auth)
+			$http.defaults.headers.common.Authorization = 'Bearer ' + cApis.authToken;
+			
+			
+			cApis.getSubscriptions(function(storedSubscriptionsLookup){
+				//subscriptionsLookup = storedSubscriptionsLookup;
+				
+				console.log("stored subs:", storedSubscriptionsLookup);
+				
+				// populate the array from the lookup
+				
+				Object.keys(storedSubscriptionsLookup).forEach(function(channelId){
+					
+					subscriptionsLookup[channelId] = storedSubscriptionsLookup[channelId];
+					
+					insertSubscriptionAndSort(storedSubscriptionsLookup[channelId], t.subscriptions);
+					//console.log("load   sub", subscriptionsLookup[channelId].snippet.title);
+				});
+				
+				
+				//console.log("finished insert from stored lookup");
+				
+				//start to fetch the subscriptions and the feeds
+				
+				console.log("req");
+				requestSubscriptions();
+			});
+			
+		}, function(error){
+			if(error && error.message == "The user is not signed in."){
+				t.signedIn = false;
+			}
+			console.log("error:", error);
+		});
+	};
+	
+	this.signIn(true);
+	chrome.identity.onSignInChanged.addListener(this.signIn);
+	
+	this.updateAllSubscriptions = function(){
+		console.log("updateAllSubscriptions", (new Date()));
+		requestSubscriptions();
+	};
+	
+	requestSubscriptions = function(pageToken){
+		requestUrl = "https://www.googleapis.com/youtube/v3/subscriptions";
+		query_parameters = {
+			"part" 			: "snippet,contentDetails",
+			"maxResults"	: "50",
+			"mine"		 	: "true",
+			"key" 			: "AIzaSyCGQi6WwvIhr62iyFcdg_b0PKOSUbb4mKw",
+			"pageToken"		: pageToken || "",
+		};
+	
+		makeRequest($http, requestUrl, query_parameters, function(response){
+			
+			response.items.forEach(function(responseSubscription){
+
+				cApis.getSubscriptionData(responseSubscription.snippet.resourceId.channelId, function(subscriptionHistory, subscriptionOptions){ // once the subscription history is ready, request the feeds
+					if(!subscriptionsLookup[responseSubscription.snippet.resourceId.channelId]){
+					// if new subscription, use the responseSubscription
+						var subscription = responseSubscription;
+						
+						// insert the new subscription in the lookUp
+						subscriptionsLookup[subscription.snippet.resourceId.channelId] = subscription;
+						
+						// assign subscription's properties
+						subscription.options = subscriptionOptions;
+						
+						// request subscription's feeds,
+						insertSubscriptionAndSort(subscription, t.subscriptions);
+						
+						
+					
+					}else{
+					// if not a new subscription, update the feeds
+						//var subscription = subscriptionsLookup[responseSubscription.snippet.resourceId.channelId];
+						
+						//subscription.options = subscriptionOptions;
+						
+						//t.subscriptions.sort(compareSubscriptionByPinPriority);
+						
+					} 
+				
+				});
+			});
+			
+			if(response.nextPageToken) requestSubscriptions(response.nextPageToken);
+		});
+		
+	};
+	
+	
+	_requestSubscriptions = function(pageToken){
+		requestUrl = "https://www.googleapis.com/youtube/v3/subscriptions";
+		query_parameters = {
+			"part" 			: "snippet,contentDetails",
+			"maxResults"	: "50",
+			"mine"		 	: "true",
+			"key" 			: "AIzaSyCGQi6WwvIhr62iyFcdg_b0PKOSUbb4mKw",
+			"pageToken"		: pageToken || "",
+		};
+	
+		makeRequest($http, requestUrl, query_parameters, function(response){
+			
+			response.items.forEach(function(subscription){
+				
+				cApis.getSubscriptionData(subscription.snippet.resourceId.channelId, function(subscriptionHistory, subscriptionOptions){ // once the subscription history is ready, request the feeds
+					
+					// assign subscription's properties
+					subscription.options = subscriptionOptions;
+					
+					insertSubscriptionAndSort(subscription, t.subscriptions);
+					
+				});
+			});
+			
+			if(response.nextPageToken){
+				requestSubscriptions(response.nextPageToken);
+			}else{
+				console.log("end fetch");
+			}
+			
+			//console.log("sort by PinPriority, Lexicogaphic");
+			//$scope.$apply(function(){
+			//	t.subscriptions.sort(compareSubscriptionByPinPriority);
+			//});
+			
+		});
+		
+	};
+	
+	
+	insertSubscriptionAndSort = function(s, array){
+		//console.log("insertSub: ", s.snippet.title, "\tpinPriority: ", s.options.pinPriority);
+		$scope.$apply(function(){
+			array.unshift(s);
+			array.sort(compareSubscriptionByPinPriority);
+		});
+		
+	}
+	
+	// returns:
+	//		-1:	s1 comes before s2
+	//		 0:	s1 equals s2
+	//		+1:	s2 comes before s1
+	compareSubscriptionByPinPriority = function(s1, s2){
+		// pinning priority: greater pinPriority comes first
+		if(s1.options.pinPriority > s2.options.pinPriority) return -1; // if s1 has greater pinning priority than s2, then s1 come first
+		if(s2.options.pinPriority > s1.options.pinPriority) return +1; // if s2 has greater pinning priority than s1, then s2 come first
+		
+		return s1.snippet.title.localeCompare(s2.snippet.title);
+	}
+	
+	
+	this.isSubscriptionFavorited = function(subscription){
+		return subscription.options.pinPriority==1;
+	}
+	this.setFavoriteSubscription = function(subscription){
+		if(subscription.options.pinPriority==1) subscription.options.pinPriority = 0;	// if it was favorited already, then it's not now
+		else subscription.options.pinPriority = 1;										// if it was not favorited already, then it's now
+		
+		cApis.storeSubscriptionOptions(subscription.snippet.resourceId.channelId, subscription.options);
+		
+		//t.subscriptions.sort(compareSubscriptionByPinPriority);
+		
+		console.log(subscription.snippet.title, subscription.options.pinPriority);
+	};
+	
+	
+	this.isSubscriptionLoved = function(subscription){
+		return subscription.options.pinPriority==2;
+	}
+	this.setLoveSubscription = function(subscription){
+		if(subscription.options.pinPriority==2) subscription.options.pinPriority = 0;	// if it was loved already, then it's not now
+		else subscription.options.pinPriority = 2;										// if it was not loved already, then it's now
+		
+		cApis.storeSubscriptionOptions(subscription.snippet.resourceId.channelId, subscription.options);
+		
+		//t.subscriptions.sort(compareSubscriptionByPinPriority);
+		
+		console.log(subscription.snippet.title, subscription.options.pinPriority);
+	};
+	
+	
+	
+	// generic HTTP Request with $http
+	function makeRequest($http, url, query_parameters, onSuccess, onError, retryCount){
+		var parameters = query_parameters || {};
+		var paramString = "";
+		retryCount = retryCount || 0;
+
+		var firstParameter = true;
+		for(var key in parameters) {
+			if(firstParameter){
+				paramString += "?"+key+"="+parameters[key];
+				firstParameter = false;
+			}else{
+				paramString += "&"+key+"="+parameters[key];
+			}
+		}
+	
+		$http.get(url+paramString).success(onSuccess).error(function(data, status, headers, config){
+			if(status == "401"){
+				if(retryCount<3){
+					// refresh the authToken and set it again in the header
+					cApis.auth(false, function(){
+						$http.defaults.headers.common.Authorization = 'Bearer ' + cApis.authToken;
+						makeRequest($http, url, query_parameters, onSuccess, onError, retryCount+1)
+					});
+				}else onError(data, status, headers, config);
+			}else{
+				onError(data, status, headers, config);
+			}
+		});
+	
+	};
+	
+	
+}]);
+
+
+/** attach event listeners here if needed
+document.addEventListener('DOMContentLoaded', function(e) {
+	var smth = document.querySelector('#smth');
+  	smth.addEventListener('click', function(e) {
+  		window.close();
+  	});
+});
+*/

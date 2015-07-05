@@ -1,0 +1,132 @@
+app = angular.module('historyModule', ['infinite-scroll']);
+
+app.factory('cApis', function() {
+	var cApis = new ChromeApis();
+	return cApis;
+});
+
+app.controller('HistoryController', ['$http', '$scope', 'cApis', function($http, $scope, cApis){
+	var t = this;
+	this.history = new Object();
+	this.timeline = new Array();
+	this.rawHistory = null;
+	
+	console.log(t.history);
+	
+	this.n = 5;
+	this.timelineLimit = 1000*60*60*24;
+	
+	getRawHistory = function(){
+		cApis.getHistory(function(storedHistory){
+			$scope.$apply(function(){
+				t.rawHistory = storedHistory;
+			});
+		})
+	};
+	
+	getRawHistory();
+	
+	this.updateHistory = function(){
+		cApis.getHistory(function(storedHistory){
+			
+			console.log(storedHistory);
+			
+			$scope.$apply(function(){
+
+				Object.keys(storedHistory).forEach(function(channelId){
+					t.history[channelId] = storedHistory[channelId].slice(-t.n);
+				});
+				
+			});
+		});
+	}
+	
+	t.updateHistory();
+	
+	
+	this.updateTimeline = function(){
+		cApis.getHistory(function(storedHistory){
+			
+			console.log(storedHistory);
+			
+			$scope.$apply(function(){
+
+				t.timeline = new Array();
+				Object.keys(storedHistory).forEach(function(channelId){
+				
+					lastEntries = storedHistory[channelId].slice(-t.n);
+					Object.keys(lastEntries).forEach(function(i){
+						if(lastEntries[i].date) t.timeline.unshift({channelId: channelId, videoId: lastEntries[i].videoId, date: lastEntries[i].date});
+					});
+				
+				});
+			
+				t.timeline.sort(function(e1,e2){return e2.date-e1.date;});
+			
+				console.log(t.timeline);
+			});
+		});
+	}
+	
+	t.updateTimeline();
+	
+	
+	
+	
+	
+	
+	
+	// generic HTTP Request with $http
+	function makeRequest($http, url, query_parameters, onSuccess, onError, retryCount){
+		var parameters = query_parameters || {};
+		var paramString = "";
+		retryCount = retryCount || 0;
+
+		var firstParameter = true;
+		for(var key in parameters) {
+			if(firstParameter){
+				paramString += "?"+key+"="+parameters[key];
+				firstParameter = false;
+			}else{
+				paramString += "&"+key+"="+parameters[key];
+			}
+		}
+
+	};
+
+		//getHistory();
+		/*
+		
+		$scope.$apply(function(){
+		});
+		*/
+		
+		
+		// request the entries video data
+		/*
+		requestUrl = "https://www.googleapis.com/youtube/v3/videos";
+		query_parameters = {
+			"part" 			: "snippet,contentDetails",
+			"maxResults"	: "50",
+			"id"		 	: ,
+			"key" 			: "AIzaSyCGQi6WwvIhr62iyFcdg_b0PKOSUbb4mKw",
+			"pageToken"		: subscription.nextPageToken || "",
+		};
+		*/
+				
+		/*
+		this.historyEntries = new Array();
+	
+	
+		for(i=0; i<5000; i++){
+			this.history.push({title: "t"+i});
+		}
+	
+		this.myPagingFunction = function(){
+			for(i=0; i<50; i++){
+				this.historyEntries.push({title: "t"+i});
+			}
+		};*/
+	
+}]);
+

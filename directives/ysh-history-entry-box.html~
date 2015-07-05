@@ -1,0 +1,42 @@
+<div class="ysh-history-entry-box">
+	
+	<div class="ysh-heb-boh">
+		
+		<div class="ysh-heb-history-date" title="{{entry.getReadableHistoryDate()}}">
+			{{entry.getHistoryDate() | timeago}}
+		</div>
+		
+	</div>
+	
+	<a class="ysh-unnoticeable-link" ng-click="" target="blank" href="{{entry.getUrl()}}" title="{{entry.title}}">
+		<img class="ysh-heb-img" ng-class="{'ysh-heb-img-grayed': entry.hidden}" ng-src="{{entry.thumbnails.medium.url}}" width="160" height="90" />
+	</a>
+	
+	<div class="ysh-heb-description">
+		
+		<div class="ysh-heb-title">
+			<a class="ysh-unnoticeable-link" ng-click="" target="blank" href="{{entry.getUrl()}}" title="{{entry.title}}">
+				{{entry.title}}
+			</a>
+		</div>
+		
+		<div class="ysh-heb-title">
+			<a class="ysh-unnoticeable-link" ng-click="" target="blank" href="{{entry.getChannelUrl()}}" title="">
+				channel title
+			</a>
+		</div>
+		
+		<div class="ysh-heb-upload-date" title="{{entry.getReadablePublishedAt()}}">
+			published {{entry.publishedAt | timeago}}
+		</div>
+		
+	</div>
+	
+	<div class="ysh-heb-buttons">
+		<a class="btn" ng-click="hisCtrl.restore(entry)" title="restore video">
+			<i class="glyphicon glyphicon-remove"></i>
+		</a>
+	</div>
+	
+</div>
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app" ng-csp="">
+<head>
+	<meta charset="utf-8" />
+	<title>Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="css/app.css">
+	<base target="_blank">
+</head>
+<body ng-controller="SubscriptionController as subCtrl">
+	
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container-fluid">
+		
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-0">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">YSH</a>
+			</div>
+			
+			<div class="navbar-collapse collapse" id="navbar-collapse-0">
+				<ul class="nav navbar-nav">
+					<li>	<a href="https://www.youtube.com/feed/history"> History</a> </li>
+					<li>	<a href="options.html"> Options</a> </li>
+					<li>	<a href="sub-selection.html"> Select</a> </li>
+					<li>	<a class="btn" ng-click="subCtrl.updateAllSubscriptions()"><i class="glyphicon glyphicon-refresh"> </i> </a> </li>
+				</ul>
+			</div>
+			
+		</div>
+	</nav>
+	
+	<section>
+		
+		<div class="ysh-alert alert alert-warning" role="alert" style=" {{!subCtrl.signedIn?'display: inherit;':'display: none'}}" >
+			Please sign in with Chrome <a class="btn" ng-click="subCtrl.signIn()">Sign In</a>
+		</div>
+		
+		<div ng-repeat="subscription in subCtrl.subscriptions | orderBy:'-(getPinPriority()+lastUploadDate)' track by subscription.channelId" >
+			<div class="ysh-subscription-container" style="{{(subscription.uploads && subscription.uploads.length)?'':'display: none'}}">
+				
+				<div class="ysh-subscription-title-box">
+				
+					<a class="ysh-unnoticeable-link" href="https://www.youtube.com/channel/{{subscription.channelId}}" >
+						<img class="ysh-subscription-title-box-content" ng-src="{{subscription.thumbnails.default.url}}"/>
+						<div class="ysh-subscription-title ysh-subscription-title-box-content">
+							{{subscription.title}}
+						</div>
+					</a>
+					
+					<div class="ysh-subscription-options ysh-subscription-title-box-content">
+						
+						<a class="btn" ng-click="subCtrl.addAllToHistory(subscription)" title="hide the channel">
+							<i class="glyphicon glyphicon-remove-circle"></i>
+						</a>
+						
+						<a class="btn" ng-click="subCtrl.updateFeeds(subscription)" title="refresh">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						
+						<a 	class="btn ysh-favorite-btn"
+							ng-class="{'ysh-favorite-btn-favorited': subCtrl.isSubscriptionFavorited(subscription)}"
+							ng-click="subCtrl.setFavoriteSubscription(subscription)"
+							title="favorite this channel">
+							<i class="glyphicon {{subCtrl.isSubscriptionFavorited(subscription)?'glyphicon-star':'glyphicon-star-empty'}}"></i>
+						</a>
+						<a 	class="btn ysh-love-btn"
+							ng-class="{'ysh-love-btn-loved': subCtrl.isSubscriptionLoved(subscription)}"
+							ng-click="subCtrl.setLoveSubscription(subscription)"
+							title="love this channel">
+							<i class="glyphicon {{subCtrl.isSubscriptionLoved(subscription)?'glyphicon-heart':'glyphicon-heart-empty'}}"></i>
+						</a>
+					</div>
+					
+				</div>
+				
+				
+				<div class="ysh-uploads-container">
+					<ysh-video-box ng-repeat="upload in subscription.uploads.slice(0,10) track by upload.contentDetails.upload.videoId"></ysh-video-box>
+				</div>
+			</div>
+		</div>
+		
+	</section>
+	
+
+	<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="js/jquery.timeago.js" type="text/javascript"></script>
+	<script src="css/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+	<script src="js/capis.js"></script>
+	<script src="js/subscriptionService.js"></script>
+	<script src="js/subscriptionModel.js"></script>
+	<script src="js/angular.js"></script>
+	<script src="js/ngtimeago.js" type="text/javascript"></script>
+	<script src="js/app.js"></script></body>
+	<script src="js/subscriptionsController.js"></script></body>
+</html>

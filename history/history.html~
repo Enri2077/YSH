@@ -1,0 +1,23 @@
+<!--title>History - Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="../css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="../css/app.css">
+	<link rel="stylesheet" media="all" href="../css/history.css">
+	<link rel="stylesheet" media="all" href="../css/ysh-history-entry-box.css"-->
+<div>
+	
+	<ysh-navbar></ysh-navbar>
+	
+	<!-- left sidebar -->
+	
+	<section>
+	
+		<!--  timeline  -->
+		<div infinite-scroll="hisCtrl.addPage()" infinite-scroll-disabled="hisCtrl.endOfHistoryReached" infinite-scroll-distance="1">
+			<ysh-history-entry-box ng-repeat="entry in hisCtrl.timeline" class="ysh-light-text"></ysh-video-box>
+		</div>
+		
+		<!--a class="btn ysh-history-load-button" ng-click="hisCtrl.incTlDays()"> load more </a-->
+		
+	</section>
+
+</div>

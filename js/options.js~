@@ -1,0 +1,59 @@
+var app = angular.module('optionsModule', []);
+
+app.factory('cApis', function() {
+	var cApis = new ChromeApis();
+	return cApis;
+});
+
+app.controller('OptionsController', ['cApis', '$scope', function(cApis, $scope){
+	var t = this;
+	this.options = new Object();
+	this.status = "";
+	this.bytesInUse = null;
+	
+	init = function(){
+		t.restoreOptions();
+		
+		cApis.getBytesInUse(function(B){
+			$scope.$apply(function(){
+				t.bytesInUse = B;
+			});
+		});
+	};
+		
+	this.saveOptions = function(valid){
+		if(valid){
+			cApis.setOptions(t.options, function(){
+				t.status = 'Options saved';
+				console.log('saved');
+				console.log(t.options);
+				
+			});
+		}else{
+			t.status = 'invalid';
+			console.log('not saved');
+			console.log(t.options);
+		}
+	};
+	
+	this.restoreOptions = function(){
+		cApis.getOptions( function(options){
+			$scope.$apply(function(){
+				t.options = options;
+				console.log('restored');
+				console.log(t.options);
+			});
+		});
+	};
+	
+	this.wipeStorage = function(){
+		cApis.wipeStorage();
+	};
+	
+	this.wipeSubscriptionsState = function(){
+		cApis.wipeSubscriptionsState();
+	};
+	
+	init();
+}]);
+

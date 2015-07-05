@@ -1,0 +1,24 @@
+<!--title>Options - Youtube Simple Homepage</title>
+<link rel="stylesheet" media="all" href="../css/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" media="all" href="../css/app.css"-->
+
+<div>
+
+	<ysh-navbar></ysh-navbar>
+	
+	<br>
+	
+	<div class="ysh-light-text"> 
+		{{optCtrl.bytesInUse/1000.0}} kB in use 
+	</div>
+	 
+	<br>
+	
+	<button class="btn btn-warning" ng-click="optCtrl.wipeSubscriptionsState()">wipe subscriptions state</button>
+	
+	<button class="btn btn-danger" ng-click="optCtrl.wipeHistory()">wipe history</button>
+	
+	<button class="btn btn-danger" ng-click="optCtrl.wipeStorage()">wipe storage</button>
+	
+</div>
+

@@ -1,0 +1,16 @@
+(function(){
+	var app = angular.module('default', []);
+	
+	app.controller('AuthController', ['$http', function($http){
+		
+		this. msg = "hello world";
+		
+		chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+			if(token){ alert("got the token");}
+			else{alert("NO TOKEN")}
+			
+		});
+		
+	}]);
+		
+})();
