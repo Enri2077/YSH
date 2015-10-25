@@ -102,6 +102,8 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 					var subscription = Subscription.apiResponseTransformer(responseSubscription);
 					subscriptionsLookup[subscription.channelId] = subscription;
 					
+					console.log("new    sub", subscription.title, subscription);
+					
 					SubscriptionService.getSubscriptionData(subscription, function(h, p){
 						subscription.history = h;
 						subscription.pinPriority = p;
@@ -126,7 +128,8 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 					console.log("check  sub", subscription.title, subscription);
 					subscription.updateInfo(responseSubscription);
 					
-					if(subscription.isLoved() || subscription.isFavorited() || subscription.etag != responseSubscription.etag){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
+					//if(subscription.isLoved() || subscription.isFavorited() || (subscription.etag != responseSubscription.etag){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
+					if((subscription.isLoved() || subscription.isFavorited()) && (subscription.etag != responseSubscription.etag){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
 						console.log("update sub", subscription.title, subscription);
 						
 						subscription.etag = responseSubscription.etag;
