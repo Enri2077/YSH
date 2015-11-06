@@ -1,0 +1,101 @@
+TODO:
+ · find better database (XML?)
+ · better ranking system, based on levels of per video watched favoriteness
+ · signing in and out: resetting controllers state, making subscriptions and history unaccessible
+ · refactor servicies
+ · put compare and equals functions in the right place
+ · ? updating animation
+ · channel title in history
+ · finish sub expansion
+ · optimize digest cycle
+ · try to fetch the upload instead of the feeds
+ · ? implement removeFromHistory
+ · ? saving uploads incrementally
+
+
+General features
+ · link to positions in page
+ · retrieve streamings
+ · retrive recommendations
+ · in-subscription search
+ · show uploads related playlists
+ · play all
+ · personalized searches
+ · period limit
+ · youtube autocomplete search 
+
+Models ☑
+
+Controllers
+	- ☐ SubscriptionController
+!		· ☐ unstore unsubscribed subscriptions
+		· ☐ new subscriptions are highlighted
+		· ☐ fresh videos are highlighted
+		· ☐ undo functionality on hiding videos
+		· ☐ fetch duration of the videos
+?		· ☐ only update on comand
+?		· ☐ lazy fetch of subscriptions (as the page is scrolled down)
+?		· ☐ hidden non favorited nor loved subscriptions
+?		· ☐ insert entry only if not already in history
+?		· ☐ fetch history from apis
+?		· ☐ use the fucking js client
+		· ☑ don't extract and reinsert a subscription when updating
+		· ☑ only fetch new upload wrt the last upload in the subscription
+		· ☑ subscription data permanent thru "sessions"
+			· ☑ only store favorited or loved subscriptions
+				· ☑ remove subscriptions when not favorited or loved anymore
+			· ☑ optimize informations stored
+		
+	- ☐ SubscriptionSelectionController
+!		· ☐ default page on extension initialization
+		· ☐ new subscriptions first
+		· ☑ load from storage
+		
+	- ☐ HistoryController
+?		· ☐ implement removeFromHistory
+		· ☐ better paging function
+		· ☑ timeline
+		
+	· ☑ routing
+	
+	- ☐ OptionController
+		
+?	- ☐ PlaylistController
+		
+Views
+?	· ☐ substitute for thumbnails when still not loaded
+	- ☐ main
+?		· ☐ hideable non favorited nor loved subscriptions
+?		· ☐ youtube autocomplete search 
+			
+
+Test cases:
+	· ☑ HTTP error
+		· ☑ HTTP Server error 50x Service Unavailable
+		· ☐ HTTP Server error 401 Unauthorized (happened when sigining in: «error: Object {message: "OAuth2 not granted or revoked."}»)
+!	· ☐ first launch
+	· ☐ wiped history
+!		· ☐ from browser (filesystem free space)
+		· ☑ from app
+	· ☐ authentication
+		· ☑ when the account is changed
+		· ☑ not authenticated in chrome
+		· ☐ cancel auth in popup
+	· ☑ fetches subs with new feeds immediately (heuristic on etag does work)?
+
+Credits:
+	· Glyphicons
+	· timeago (jQuery plugin)
+	· AngularJS
+	· Bootstrap
+	
+Screenshot channels:
+	· PewDiePie
+	· smosh
+	· Rocketjump
+	· ESA
+	· Breakingitaly
+
+Min chrome version:
+	· 
+
