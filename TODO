@@ -1,5 +1,5 @@
 TODO:
- · find better database (XML?)
+ · find better database, ... (XML?)
  · better ranking system, based on levels of per video watched favoriteness
  · signing in and out: resetting controllers state, making subscriptions and history unaccessible
  · refactor servicies

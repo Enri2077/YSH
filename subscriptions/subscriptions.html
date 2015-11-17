@@ -9,8 +9,7 @@
 	<ysh-navbar></ysh-navbar>
 	
 	<section>
-		
-		
+	
 		<div class="alert alert-warning" role="alert" ng-show="!subCtrl.isSignedIn()" >
 			Please sign in with Chrome <a class="btn" ng-click="subCtrl.signIn()">Sign In</a>
 		</div>
@@ -30,6 +29,11 @@
 					</a>
 					
 					<div class="ysh-subscription-options ysh-subscription-title-box-content">
+						
+						<div class="ysh-sub-searchbox form-group">
+							
+								<input ng-show="svc.expanded" ng-model="query" type="text" class="form-control ysh-input" placeholder="search by title">
+						</div>
 						
 						<a 	class="btn"
 							ng-class="{'ysh-activated-btn': svc.expanded}"
@@ -65,7 +69,10 @@
 				
 				
 				<div ng-class="{'ysh-uploads-container': !svc.expanded, 'ysh-uploads-container-expanded': svc.expanded}">
-					<ysh-video-box ng-repeat="upload in subscription.uploads | limitTo:svc.uploadsLimit() track by upload.videoId"></ysh-video-box>
+					<ysh-video-box ng-repeat="upload in subscription.uploads
+												| limitTo:svc.uploadsLimit()
+												| filter:(svc.expanded ? query : ''):upload.title
+												track by upload.videoId"></ysh-video-box>
 				</div>
 			</div>
 		</div>

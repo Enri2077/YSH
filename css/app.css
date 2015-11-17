@@ -48,6 +48,17 @@ body{
 	float:	right;
 }
 
+.ysh-sub-searchbox{
+	display: inline-block;
+	vertical-align: bottom;
+	margin: 0px 5px 0px 5px;
+}
+.ysh-input{
+	color: gray;
+	background-color: #333;
+	border-color: #252525;
+}
+
 .ysh-love-btn{
 	color:	gray;
 }
@@ -102,4 +113,5 @@ body{
 }
 
 .ysh-uploads-container-expanded{
+	min-height: 228px;
 }
