@@ -129,7 +129,8 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 					subscription.updateInfo(responseSubscription);
 					
 					//if(subscription.isLoved() || subscription.isFavorited() || subscription.etag != responseSubscription.etag){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
-					if((subscription.isLoved() || subscription.isFavorited()) && subscription.etag != responseSubscription.etag){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
+					//if((subscription.isLoved() || subscription.isFavorited()) && subscription.etag != responseSubscription.etag){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
+					if(subscription.isLoved() || subscription.isFavorited()){ // Heuristic: Figure out if the feeds have changed, if so request the feeds again
 						console.log("update sub", subscription.title, subscription);
 						
 						subscription.etag = responseSubscription.etag;

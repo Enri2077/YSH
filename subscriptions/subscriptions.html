@@ -14,7 +14,8 @@
 			Please sign in with Chrome <a class="btn" ng-click="subCtrl.signIn()">Sign In</a>
 		</div>
 		
-		<div ng-repeat="subscription in subCtrl.subscriptions track by subscription.channelId | orderBy:'-(getPinPriority()+lastUploadDate)'" >
+		<div ng-repeat="subscription in subCtrl.subscriptions | orderBy:'-(getPinPriority()+lastUploadDate)' track by subscription.channelId" >
+			
 			<div ng-controller="SubscriptionViewController as svc" class="ysh-subscription-container"  ng-show="subscription.hasUploads()"
 					ng-class="{	'ysh-subscription-container-favorited':	subCtrl.isSubscriptionFavorited(subscription),
 								'ysh-subscription-container-loved':		subCtrl.isSubscriptionLoved(subscription),
@@ -70,7 +71,7 @@
 				
 				
 				<div ng-class="{'ysh-uploads-container': !svc.expanded, 'ysh-uploads-container-expanded': svc.expanded}">
-					<ysh-video-box ng-repeat="upload in subscription.uploads track by upload.videoId | limitTo:svc.uploadsLimit() | filter:(svc.expanded ? query : ''):upload.title "></ysh-video-box>
+					<ysh-video-box ng-repeat="upload in subscription.uploads | limitTo:svc.uploadsLimit() | filter:(svc.expanded ? query : ''):upload.title track by upload.videoId "></ysh-video-box>
 				</div>
 			</div>
 		</div>
