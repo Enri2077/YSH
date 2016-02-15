@@ -36,6 +36,8 @@
 		"identity",
 		"storage",
 		"unlimitedStorage",
+		"downloads",
+		
 		"tabs",
     	"https://ssl.gstatic.com/",
     	"https://www.googleapis.com/",

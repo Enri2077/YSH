@@ -2,11 +2,11 @@
 <html lang="en" ng-app="app" ng-csp="">
 <head>
 	<meta charset="utf-8">
-	<title> title </title>
+	<title> YSH </title>
 	
 	<script src="js/jquery-2.1.1.min.js"></script>
 	<script src="js/angular.js"></script>
-	
+	<script src="node_modules/localforage/dist/localforage.js"></script>
 	<script src="js/jquery.timeago.js"></script>
 	<script src="js/angular-route.js"></script>
 	<script src="js/ngtimeago.js"></script>
@@ -14,6 +14,7 @@
 	<script src="css/bootstrap/js/bootstrap.js"></script>
 	
 	<script src="shared/capis.js"></script>
+	<script src="shared/databaseService.js"></script>
 	<script src="shared/subscriptionService.js"></script>
 	<script src="shared/historyService.js"></script>
 	
@@ -27,6 +28,7 @@
 	<script src="subscriptions/subscriptionsControllerState.js"></script>
 	<script src="subSelection/subscriptionsSelectionController.js"></script>
 	<script src="options/optionsController.js"></script>
+	<script src="options/databaseController.js"></script>
 	<script src="history/historyController.js"></script>
 	
 	

@@ -1,0 +1,28 @@
+<div>
+	
+	<button class="btn" ng-click="dbCtrl.inc()">+</button>
+	
+	<!--
+	<ysh-navbar></ysh-navbar>
+	
+	<br>
+	
+	<div class="ysh-light-text"> 
+		{{dbCtrl.bytesInUse/1000.0}} kB in use
+	</div>
+	-->
+	<div class="ysh-light-text"> 
+		{{dbCtrl.getDB()}}
+	</div>
+	<!--
+	
+	<br>
+	
+	<button class="btn btn-warning" ng-click="dbCtrl.wipeSubscriptionsState()">wipe subscriptions state</button>
+	
+	<button class="btn btn-danger" ng-click="dbCtrl.wipeHistory()">wipe history</button>
+	
+	<button class="btn btn-danger" ng-click="dbCtrl.wipeStorage()">wipe storage</button>
+	-->
+</div>
+

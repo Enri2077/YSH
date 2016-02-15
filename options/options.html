@@ -8,6 +8,13 @@
 	
 	<br>
 	
+	<button class="btn" ng-click="optCtrl.exportDatabase()">export database</button>
+	<div id="status"></div>
+	
+	<br>
+	
+	<button class="btn" ng-click="optCtrl.inc()">+</button>
+	
 	<div class="ysh-light-text"> 
 		{{optCtrl.bytesInUse/1000.0}} kB in use 
 	</div>
@@ -19,6 +26,11 @@
 	<button class="btn btn-danger" ng-click="optCtrl.wipeHistory()">wipe history</button>
 	
 	<button class="btn btn-danger" ng-click="optCtrl.wipeStorage()">wipe storage</button>
+	<!--
+	<div class="ysh-light-text"> 
+		{{optCtrl.db}}
+	</div>
+	-->
 	
 </div>
 

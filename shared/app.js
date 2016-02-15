@@ -19,10 +19,16 @@ app.config(['$routeProvider',function($routeProvider){
 		templateUrl: 'options/options.html',
 		controller: 'OptionsController as optCtrl'
 	}).
+	when('/database', {
+		templateUrl: 'options/database.html',
+		controller: 'DatabaseController as dbCtrl'
+	}).
 	otherwise({
 		redirectTo: '/subscriptions'
 	});
 }]);
+
+//app.service('DatabaseService', databaseService);
 
 app.service('SubscriptionService', subscriptionService);
 

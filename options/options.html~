@@ -1,10 +1,15 @@
 <!--title>Options - Youtube Simple Homepage</title>
-	<link rel="stylesheet" media="all" href="../css/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" media="all" href="../css/app.css"-->
+<link rel="stylesheet" media="all" href="../css/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" media="all" href="../css/app.css"-->
 
 <div>
 
 	<ysh-navbar></ysh-navbar>
+	
+	<br>
+	
+	<button class="btn" ng-click="optCtrl.exportDatabase()">export database</button>
+	<div id="status"></div>
 	
 	<br>
 	
@@ -19,6 +24,11 @@
 	<button class="btn btn-danger" ng-click="optCtrl.wipeHistory()">wipe history</button>
 	
 	<button class="btn btn-danger" ng-click="optCtrl.wipeStorage()">wipe storage</button>
+	<!--
+	<div class="ysh-light-text"> 
+		{{optCtrl.db}}
+	</div>
+	-->
 	
 </div>
 

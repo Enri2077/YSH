@@ -114,8 +114,16 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 								t.subscriptions.unshift(subscription);
 								console.log("insert sub", subscription.title, subscription);
 							}else{
-								t.subscriptions.push(subscription);
-								console.log("push   sub", subscription.title, subscription);
+								// WORKAROUND
+								if(t.subscriptions.findIndex(
+									function(element, index, array){
+										return this.channelId == element.channelId},
+									subscription)>-1){
+									console.log("!!! WRONG PUSH", subscription.title, subscription);
+								}else{
+									t.subscriptions.push(subscription);
+									console.log("push   sub", subscription.title, subscription);								
+								}
 							}
 							
 							SubscriptionService.saveSubscription(subscription);
