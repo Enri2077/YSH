@@ -14,7 +14,9 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 			SubscriptionsState.signedIn = true;
 			SubscriptionsState.ready = true;
 			
+			console.log("initSubscriptions");
 			initSubscriptions();
+			console.log("requestSubscriptions");
 			requestSubscriptions();
 			
 			console.log("signIn:", SubscriptionsState);
@@ -84,6 +86,8 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 		}
 	};
 	
+	function subCompare(element, index, array){return this.channelId == element.channelId}
+	
 	requestSubscriptions = function(pageToken){
 		$scope.updating = $scope.updating + 1;
 		
@@ -104,29 +108,35 @@ angular.module('app').controller('SubscriptionController', function(Subscription
 					
 					console.log("new    sub", subscription.title, subscription);
 					
+					if(-1 != t.subscriptions.findIndex(subCompare, subscription)){
+						console.log("sub alreay in array (1)", subscription.title, subscription)
+					}
+					
 					SubscriptionService.getSubscriptionData(subscription, function(h, p){
 						subscription.history = h;
 						subscription.pinPriority = p;
 						
+						if(-1 != t.subscriptions.findIndex(subCompare, subscription)){
+							console.log("sub alreay in array (2)", subscription.title, subscription)
+						}
+						
 						requestFeedsAfter(subscription, false, function(){
 							
-							if(subscription.hasUploads()){
-								t.subscriptions.unshift(subscription);
-								console.log("insert sub", subscription.title, subscription);
+							if(-1 != t.subscriptions.findIndex(subCompare, subscription)){
+								console.log("sub alreay in array (3)", subscription.title, subscription)
 							}else{
-								// WORKAROUND
-								if(t.subscriptions.findIndex(
-									function(element, index, array){
-										return this.channelId == element.channelId},
-									subscription)>-1){
-									console.log("!!! WRONG PUSH", subscription.title, subscription);
+								
+								if(subscription.hasUploads()){
+									t.subscriptions.unshift(subscription);
+									console.log("insert sub", subscription.title, subscription);
 								}else{
 									t.subscriptions.push(subscription);
 									console.log("push   sub", subscription.title, subscription);								
 								}
+							
+								SubscriptionService.saveSubscription(subscription);							
 							}
 							
-							SubscriptionService.saveSubscription(subscription);
 						});
 					});
 				
