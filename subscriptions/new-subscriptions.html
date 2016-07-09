@@ -1,0 +1,83 @@
+<!--title>Youtube Simple Homepage</title>
+	<link rel="stylesheet" media="all" href="../css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" media="all" href="../css/app.css">
+	<link rel="stylesheet" media="all" href="../css/subscriptions.css">
+	<link rel="stylesheet" media="all" href="../css/ysh-video-box.css"-->
+
+<div>
+	
+	<ysh-navbar></ysh-navbar>
+	
+	<section>
+	
+		<div class="alert alert-warning" role="alert" ng-show="!subCtrl.isSignedIn()" >
+			Please sign in with Chrome <a class="btn" ng-click="subCtrl.signIn()">Sign In</a>
+		</div>
+		
+		<div ng-repeat="subscription in subCtrl.subscriptions | orderBy:'-(getPinPriority()+lastUploadDate)' track by subscription.channelId" >
+			
+			<div ng-controller="SubscriptionViewController as svc" class="ysh-subscription-container"  ng-show="subscription.hasUploads()"
+					ng-class="{	'ysh-subscription-container-favorited':	subCtrl.isSubscriptionFavorited(subscription),
+								'ysh-subscription-container-loved':		subCtrl.isSubscriptionLoved(subscription),
+								'ysh-subscription-container-expanded':	svc.expanded}">
+				
+				<div class="ysh-subscription-title-box">
+				
+					<a class="ysh-unnoticeable-link" target="_blank" href="https://www.youtube.com/channel/{{subscription.channelId}}" >
+						<img class="ysh-subscription-title-box-content" ng-src="{{subscription.thumbnails.default.url}}"/>
+						<div class="ysh-subscription-title ysh-subscription-title-box-content">
+							{{subscription.title}}
+						</div>
+					</a>
+					
+					<div class="ysh-subscription-options ysh-subscription-title-box-content">
+						
+						<div class="ysh-sub-searchbox form-group">
+							
+								<input ng-show="svc.expanded" ng-model="query" type="text" class="form-control ysh-input" placeholder="search by title">
+						</div>
+						
+						<a 	class="btn"
+							ng-class="{'ysh-activated-btn': svc.expanded}"
+							ng-click="svc.toggleExpanded()"
+							title="expand this channel">
+							<i class="glyphicon" ng-class="{'glyphicon-chevron-down': !svc.expanded, 'glyphicon-chevron-up': svc.expanded}"></i>
+						</a>
+						
+						<a class="btn" ng-click="subCtrl.addAllToHistory(subscription)" title="hide the channel">
+							<i class="glyphicon glyphicon-remove-circle"></i>
+						</a>
+						
+						<a class="btn" ng-click="subCtrl.updateFeeds(subscription)" title="refresh">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						
+						<a 	class="btn ysh-favorite-btn"
+							ng-class="{'ysh-favorite-btn-favorited': subCtrl.isSubscriptionFavorited(subscription)}"
+							ng-click="subCtrl.setFavoriteSubscription(subscription)"
+							title="favorite this channel">
+							<i class="glyphicon {{subCtrl.isSubscriptionFavorited(subscription)?'glyphicon-star':'glyphicon-star-empty'}}"></i>
+						</a>
+						<a 	class="btn ysh-love-btn"
+							ng-class="{'ysh-love-btn-loved': subCtrl.isSubscriptionLoved(subscription)}"
+							ng-click="subCtrl.setLoveSubscription(subscription)"
+							title="love this channel">
+							<i class="glyphicon {{subCtrl.isSubscriptionLoved(subscription)?'glyphicon-heart':'glyphicon-heart-empty'}}"></i>
+						</a>
+						
+					</div>
+					
+				</div>
+				
+				
+				<div ng-class="{'ysh-uploads-container': !svc.expanded, 'ysh-uploads-container-expanded': svc.expanded}">
+					<ysh-video-box ng-repeat="upload in subscription.uploads | limitTo:svc.uploadsLimit() | filter:(svc.expanded ? query : ''):upload.title track by upload.videoId "></ysh-video-box>
+				</div>
+			</div>
+		</div>
+		
+	</section>
+	
+</div>
+
+{{initSubs()}}

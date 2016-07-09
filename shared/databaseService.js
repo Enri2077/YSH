@@ -7,17 +7,19 @@ angular.module('app').factory('DatabaseService', function(Subscription, Video){
 	
 	// initialise service variables
 	
-DatabaseService.prototype.initialised = false;
+//DatabaseService.prototype.initialised = false;
 
-console.log("DatabaseService", DatabaseService.prototype.i, DatabaseService.prototype.initialised);
+//console.log("DatabaseService", DatabaseService.prototype.i, DatabaseService.prototype.initialised);
 
 DatabaseService.prototype.init = function(){
+	return;
 	DatabaseService.prototype.i = 0;
 	DatabaseService.prototype.initialised = true;
 	console.log("DatabaseService INIT", DatabaseService.prototype.i, DatabaseService.prototype.initialised);
 };
 
 DatabaseService.prototype.inc = function(){
+	return;
 	DatabaseService.prototype.i = DatabaseService.prototype.i + 1;
 	console.log("DatabaseService", DatabaseService.prototype.i, DatabaseService.prototype.initialised);
 }

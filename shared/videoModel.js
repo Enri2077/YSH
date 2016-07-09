@@ -13,13 +13,23 @@ function modelVideo(){
 	}
 	
 	Video.apiActivityResponseTransformer = function(youtubeApiResponse){
-		return new Video(
-			youtubeApiResponse.snippet.title,
-			youtubeApiResponse.contentDetails.upload.videoId,
-			youtubeApiResponse.snippet.channelId,
-			youtubeApiResponse.snippet.thumbnails,
-			youtubeApiResponse.snippet.publishedAt
-		);
+		if(youtubeApiResponse.kind === "youtube#playlistItem"){
+			return new Video(
+				youtubeApiResponse.snippet.title,
+				youtubeApiResponse.snippet.resourceId.videoId,
+				youtubeApiResponse.snippet.channelId,
+				youtubeApiResponse.snippet.thumbnails,
+				youtubeApiResponse.snippet.publishedAt
+			);
+		}else{
+			return new Video(
+				youtubeApiResponse.snippet.title,
+				youtubeApiResponse.contentDetails.upload.videoId,
+				youtubeApiResponse.snippet.channelId,
+				youtubeApiResponse.snippet.thumbnails,
+				youtubeApiResponse.snippet.publishedAt
+			);
+		}
 	};
 	
 	Video.fromStorageObject = function(storageObject){

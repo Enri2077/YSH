@@ -13,8 +13,10 @@
 	<script src="js/ng-infinite-scroll.min.js"></script>
 	<script src="css/bootstrap/js/bootstrap.js"></script>
 	
+	//<script src="js/auth.js"></script>
+	<script src="js/client.js?onload=googleApiClientReady"></script>
+	
 	<script src="shared/capis.js"></script>
-	<script src="shared/databaseService.js"></script>
 	<script src="shared/subscriptionService.js"></script>
 	<script src="shared/historyService.js"></script>
 	
@@ -25,12 +27,14 @@
 	
 	<script src="subscriptions/subscriptionViewController.js"></script>
 	<script src="subscriptions/subscriptionsController.js"></script>
+	<script src="subscriptions/newSubscriptionsController.js"></script>
 	<script src="subscriptions/subscriptionsControllerState.js"></script>
 	<script src="subSelection/subscriptionsSelectionController.js"></script>
 	<script src="options/optionsController.js"></script>
 	<script src="options/databaseController.js"></script>
 	<script src="history/historyController.js"></script>
 	
+	<script src="shared/databaseService.js"></script>
 	
 	<link rel="stylesheet" media="all" href="css/angular-csp.css">
 	<link rel="stylesheet" media="all" href="css/bootstrap/css/bootstrap.css">

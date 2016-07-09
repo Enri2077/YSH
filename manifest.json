@@ -31,6 +31,8 @@
 		"16": "assets/icon_16x16.png",
 		"128": "assets/icon_128x128.png"
 	},
+	
+	"content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
 
 	"permissions": [
 		"identity",

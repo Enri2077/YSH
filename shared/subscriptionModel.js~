@@ -2,16 +2,17 @@
 
 function modelSubscription(){
 	
-	function Subscription(title, channelId, thumbnails, etag, pinPriority, history, uploads, lastUploadDate, nextPageToken){
-		this.title			= title;
-		this.channelId 		= channelId;
-		this.thumbnails 	= thumbnails;
-		this.etag 			= etag;
-		this.pinPriority 	= pinPriority;
-		this.history 		= history;
-		this.uploads 		= uploads;
-		this.lastUploadDate	= lastUploadDate;
-		this.nextPageToken	= nextPageToken;
+	function Subscription(title, channelId, thumbnails, etag, uploadPlaylistId, pinPriority, history, uploads, lastUploadDate, nextPageToken){
+		this.title				= title;
+		this.channelId 			= channelId;
+		this.thumbnails 		= thumbnails;
+		this.etag 				= etag;
+		this.uploadPlaylistId	= uploadPlaylistId
+		this.pinPriority 		= pinPriority;
+		this.history 			= history;
+		this.uploads 			= uploads;
+		this.lastUploadDate		= lastUploadDate;
+		this.nextPageToken		= nextPageToken;
 	};
 	
 	Subscription.apiResponseTransformer = function(youtubeApiResponse){
@@ -24,11 +25,13 @@ function modelSubscription(){
 	};
 	
 	Subscription.fromStorageObject = function(storageObject, pinPriority, history, uploads){
+		var uploadPlaylistId = null; //TODO
 		return new Subscription(
 			storageObject.title,
 			storageObject.channelId,
 			storageObject.thumbnails,
 			storageObject.etag,
+			uploadPlaylistId,
 			pinPriority,
 			history,
 			uploads,
@@ -56,7 +59,7 @@ function modelSubscription(){
 	Subscription.prototype.updateInfo = function(youtubeApiResponse){
 		this.title			= youtubeApiResponse.snippet.title;
 		this.thumbnails 	= youtubeApiResponse.snippet.thumbnails;
-	}
+	};
 	
 	
 	Subscription.prototype.getPinPriority = function(){
@@ -149,10 +152,11 @@ function modelSubscription(){
 	
 	
 	// TODO find apropriate place for compareUploadByUploadDate
-	// private
 	var compareUploadByUploadDate = function(u1, u2){
 		return u2.publishedAt.localeCompare(u1.publishedAt);
 	};
+	
+	Subscription.prototype.compareUploadByUploadDate = compareUploadByUploadDate;
 	
 	return Subscription;
 }

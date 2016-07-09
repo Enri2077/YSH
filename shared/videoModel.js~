@@ -13,13 +13,23 @@ function modelVideo(){
 	}
 	
 	Video.apiActivityResponseTransformer = function(youtubeApiResponse){
-		return new Video(
-			youtubeApiResponse.snippet.title,
-			youtubeApiResponse.contentDetails.upload.videoId,
-			youtubeApiResponse.snippet.channelId,
-			youtubeApiResponse.snippet.thumbnails,
-			youtubeApiResponse.snippet.publishedAt
-		);
+		if(kind === "youtube#playlistItem"){
+			return new Video(
+				youtubeApiResponse.snippet.title,
+				youtubeApiResponse.snippet.resourceId.videoId,
+				youtubeApiResponse.snippet.channelId,
+				youtubeApiResponse.snippet.thumbnails,
+				youtubeApiResponse.snippet.publishedAt
+			);
+		}else{
+			return new Video(
+				youtubeApiResponse.snippet.title,
+				youtubeApiResponse.contentDetails.upload.videoId,
+				youtubeApiResponse.snippet.channelId,
+				youtubeApiResponse.snippet.thumbnails,
+				youtubeApiResponse.snippet.publishedAt
+			);
+		}
 	};
 	
 	Video.fromStorageObject = function(storageObject){
@@ -87,12 +97,6 @@ function modelVideo(){
 		var d = new Date(this.publishedAt);
 		return d.getFullYear()+"-"+(1+d.getMonth())+"-"+d.getDate()+" "+d.toTimeString();
 	};
-	
-	Video.prototype.getColorDate = function(){
-		var m = ( (new Date()).getTime() - new Date(this.publishedAt) ) / 1000 / 60;
-		return "rgba(0,0,0,"+0.5/(1+m/30)+")";
-	};
-	
 	
 	/* TODO getters and setters */
 	

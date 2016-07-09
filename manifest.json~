@@ -36,7 +36,8 @@
 		"identity",
 		"storage",
 		"unlimitedStorage",
-		{ "fileSystem": ["write"] },
+		"downloads",
+		
 		"tabs",
     	"https://ssl.gstatic.com/",
     	"https://www.googleapis.com/",

@@ -6,6 +6,20 @@ app.controller('SubscriptionSelectionController', ['$http', '$scope', 'cApis', '
 	this.subscriptions = new Array();
 	subscriptionsLookup = new Object();
 	
+	t.subsRes = new Array();
+	
+	subRank = function(){
+		//return t.subsRes;
+		
+		
+		t.subsRes.sort(function (s1, s2) {
+			return s1.snippet.publishedAt.localeCompare(s2.snippet.publishedAt);
+		});
+		t.subsRes.forEach(function(s){
+			console.log(s.snippet.publishedAt, s.snippet.title);
+		});
+	}
+	
 	this.signIn = function(silent){
 		cApis.auth(!silent, function() { // asynchronous callback on token recevied
 			t.signedIn = true;
@@ -64,10 +78,15 @@ app.controller('SubscriptionSelectionController', ['$http', '$scope', 'cApis', '
 		};
 		makeRequest($http, requestUrl, query_parameters, function(response){
 			response.items.forEach(function(responseSubscription){
+				
+				t.subsRes.unshift(responseSubscription);
+				
+				
 				if(!subscriptionsLookup[responseSubscription.snippet.resourceId.channelId]){
 					// if new subscription, use the responseSubscription
 					var subscription = Subscription.apiResponseTransformer(responseSubscription);
 					subscriptionsLookup[subscription.channelId] = subscription;
+					
 					
 					SubscriptionService.getSubscriptionData(subscription, function(h, p){
 						subscription.history = h;

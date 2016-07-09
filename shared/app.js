@@ -23,8 +23,12 @@ app.config(['$routeProvider',function($routeProvider){
 		templateUrl: 'options/database.html',
 		controller: 'DatabaseController as dbCtrl'
 	}).
+	when('/newSubs', {
+		templateUrl: 'subscriptions/new-subscriptions.html',
+		controller: 'NewSubscriptionController as subCtrl'
+	}).
 	otherwise({
-		redirectTo: '/subscriptions'
+		redirectTo: '/newSubs'
 	});
 }]);
 
