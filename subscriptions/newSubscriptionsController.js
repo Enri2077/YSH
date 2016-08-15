@@ -12,7 +12,10 @@ angular.module('app').controller('NewSubscriptionController', function(cApis, Vi
 			$http.defaults.headers.common.Authorization = 'Bearer ' + cApis.authToken;
 			
 			if(gapi.client && !isInitialised ) isInitialised = true;
-			else return;
+			else {
+				console.log("gapi.client NOT LOADED", gapi.client);
+				return;
+			}
 			
 			console.log("gapi.client loaded", gapi.client);
 			
